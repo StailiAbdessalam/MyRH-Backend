@@ -6,6 +6,7 @@ import com.veinsmoke.myrhbackend.repository.AgentRepository;
 import com.veinsmoke.myrhbackend.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
+@Primary
 @Slf4j
 @RequiredArgsConstructor
 public class CostumeUserDetailsService implements UserDetailsService {

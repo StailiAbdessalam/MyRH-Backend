@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CostumeUserDetailsService costumeUserDetailsService;
+    private final JWTAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,7 +45,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/client/**").hasAnyAuthority("CLIENT")
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
