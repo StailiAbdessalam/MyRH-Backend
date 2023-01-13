@@ -23,6 +23,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtils;
     private final UserDetailsService userDetailService;
+    private final TokenStore tokenStore;
 
     @Override
     protected void doFilterInternal(
@@ -40,6 +41,12 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         }
 
         jwtToken = authHeader.substring(7);
+
+        if(tokenStore.getAuthentication(jwtToken) != null){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         userEmail = jwtUtils.extractUsername(jwtToken);
         userType = jwtUtils.extractUserType(jwtToken);
         if(userEmail != null && userType != null && SecurityContextHolder.getContext().getAuthentication() == null){
