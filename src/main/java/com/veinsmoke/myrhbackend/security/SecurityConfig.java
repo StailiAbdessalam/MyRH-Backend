@@ -59,10 +59,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/company/**").hasAnyAuthority("COMPANY")
-            .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/client/**").hasAnyAuthority("CLIENT")
+                .requestMatchers("/agent/**").hasAnyAuthority("AGENT")
                 .anyRequest()
                 .authenticated()
             .and()
@@ -98,7 +95,7 @@ public class SecurityConfig {
             AuthenticationException authException) throws IOException {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(mapper.writeValueAsString(Collections.singletonMap("error", "Unauthenticated")));
+        response.getWriter().write(mapper.writeValueAsString(Collections.singletonMap("error", authException.getMessage())));
     }
 
     @Bean
