@@ -5,6 +5,10 @@ import com.veinsmoke.myrhbackend.enums.JobType;
 import com.veinsmoke.myrhbackend.enums.SalaryType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,6 +20,10 @@ import java.time.LocalDateTime;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobOffer {
 
     @Id
@@ -36,9 +44,9 @@ public class JobOffer {
     SalaryType salaryType;
 
     @Column(nullable = false)
-    String Country;
+    String country;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text default 'OPEN'")
     JobState state;
 
     @Column( nullable = false )
@@ -49,6 +57,6 @@ public class JobOffer {
     @UpdateTimestamp
     LocalDateTime updated_at;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     Company company;
 }

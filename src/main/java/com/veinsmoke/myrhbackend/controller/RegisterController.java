@@ -100,7 +100,7 @@ public class RegisterController {
         // generate jwt token
         String jwtToken = jwtUtil.generateToken(
                 new HashMap<>() {{
-                    put("userType", "client");
+                    put("userType", "company");
                 }},
                 user);
 

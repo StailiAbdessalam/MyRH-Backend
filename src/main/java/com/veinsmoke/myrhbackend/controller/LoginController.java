@@ -52,7 +52,7 @@ public class LoginController {
 
         String jwtToken = jwtUtil.generateToken(
                 new HashMap<>() {{
-                    put("userType", "agent");
+                    put("userType", userType);
                 }},
                 user);
         HashMap<String, String> response = new HashMap<>();
