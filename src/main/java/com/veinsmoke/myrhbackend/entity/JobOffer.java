@@ -28,10 +28,6 @@ public class JobOffer {
     @Column(nullable = false)
     String description;
 
-    @Email
-    @Column(nullable = false)
-    String email;
-
     @Column(nullable = false)
     JobType jobType;
 

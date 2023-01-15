@@ -2,6 +2,7 @@ package com.veinsmoke.myrhbackend.entity;
 
 
 import com.veinsmoke.myrhbackend.entity.superclass.User;
+import com.veinsmoke.myrhbackend.enums.CompanySize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,22 +25,30 @@ public class Company extends User {
     @Column(nullable = false)
     String name;
 
+    @Column(columnDefinition = "boolean default false")
+    Boolean verified;
 
     String logo;
 
     @Column(nullable = false)
-    int employees;
+    CompanySize size;
 
     @Column(nullable = false)
     LocalDate foundationDate;
 
     @Column( nullable = false )
-    @CreationTimestamp
-    LocalDateTime created_at;
+    String verificationCode;
 
-    @Column( nullable = false )
+    @Column( name = "sent_at" )
+    LocalDateTime sentAt;
+
+    @Column( nullable = false, name = "created_at" )
+    @CreationTimestamp
+    LocalDateTime createdAt;
+
+    @Column( nullable = false, name = "updated_at" )
     @UpdateTimestamp
-    LocalDateTime updated_at;
+    LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "company")
     List<JobOffer> jobOffers;
