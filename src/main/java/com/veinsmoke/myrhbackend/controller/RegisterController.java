@@ -68,6 +68,52 @@ public class RegisterController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/verify")
+    public ResponseEntity<HashMap<String, String>> verify(@RequestBody VerificationCredentials verificationCredentials){
+        String email = verificationCredentials.getEmail();
+        String code = verificationCredentials.getCode();
+
+        // check if email exists
+        Company company = companyService.getCompanyByEmail(email).orElseThrow(() -> new VerificationFailedException("Email not found"));
+
+        // check if code is correct
+        if(!company.getVerificationCode().equals(code)){
+            throw new VerificationFailedException("Invalid verification code");
+        }
+
+        // check if code is expired
+        if(company.getSentAt().plusMinutes(3).isBefore(LocalDateTime.now())){
+            throw new VerificationFailedException("Verification code expired");
+        }
+
+        // update company
+        company.setVerified(true);
+        companyService.save(company);
+
+        // authenticate new client
+        String emailAndType = company.getEmail() + ":company";
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(emailAndType, verificationCredentials.getPassword());
+        authenticationManager.authenticate(token);
+        UserDetails user = userDetailsService.loadUserByUsername(emailAndType);
+
+        // generate jwt token
+        String jwtToken = jwtUtil.generateToken(
+                new HashMap<>() {{
+                    put("userType", "client");
+                }},
+                user);
+
+
+
+        // return response
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "Account verified Successfully");
+        response.put("email", verificationCredentials.getEmail());
+        response.put("token", jwtToken);
+        return ResponseEntity.ok(response);
+    }
+
 
     private String generateCode() {
         String code = String.valueOf((int) Math.floor(Math.random() * 1000000));
