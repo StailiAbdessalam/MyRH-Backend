@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors()
             .and()
-                .authorizeHttpRequests().requestMatchers("/login/**", "/register", "/", "/verify")
+                .authorizeHttpRequests().requestMatchers("/login/**", "/register","/register/verify",  "/", "/verify")
                 .permitAll()
             .and()
                 .sessionManagement()
