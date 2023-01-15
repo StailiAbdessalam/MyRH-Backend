@@ -1,6 +1,7 @@
 package com.veinsmoke.myrhbackend.entity.superclass;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class User {
     String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     String password;
 
 

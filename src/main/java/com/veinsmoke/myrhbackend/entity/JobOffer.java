@@ -1,5 +1,6 @@
 package com.veinsmoke.myrhbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.veinsmoke.myrhbackend.enums.JobState;
 import com.veinsmoke.myrhbackend.enums.JobType;
 import com.veinsmoke.myrhbackend.enums.SalaryType;
@@ -51,10 +52,12 @@ public class JobOffer {
 
     @Column( nullable = false )
     @CreationTimestamp
+    @JsonIgnore
     LocalDateTime created_at;
 
     @Column( nullable = false )
     @UpdateTimestamp
+    @JsonIgnore
     LocalDateTime updated_at;
 
     @ManyToOne()

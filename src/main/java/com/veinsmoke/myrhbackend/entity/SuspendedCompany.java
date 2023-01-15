@@ -1,5 +1,6 @@
 package com.veinsmoke.myrhbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +31,11 @@ public class SuspendedCompany {
 
     @Column( nullable = false )
     @CreationTimestamp
+    @JsonIgnore
     LocalDateTime created_at;
 
     @Column( nullable = false )
     @UpdateTimestamp
+    @JsonIgnore
     LocalDateTime updated_at;
 }

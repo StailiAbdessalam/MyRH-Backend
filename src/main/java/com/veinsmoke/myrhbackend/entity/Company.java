@@ -1,6 +1,7 @@
 package com.veinsmoke.myrhbackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.veinsmoke.myrhbackend.entity.superclass.User;
 import com.veinsmoke.myrhbackend.enums.CompanySize;
 import jakarta.persistence.*;
@@ -44,8 +45,10 @@ public class Company extends User {
 
     @Column( nullable = false, name = "created_at" )
     @CreationTimestamp
+    @JsonIgnore
     LocalDateTime createdAt;
 
+    @JsonIgnore
     @Column( nullable = false, name = "updated_at" )
     @UpdateTimestamp
     LocalDateTime updatedAt;
