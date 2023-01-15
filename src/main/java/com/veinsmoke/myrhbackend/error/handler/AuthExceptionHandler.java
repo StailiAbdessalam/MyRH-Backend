@@ -28,7 +28,12 @@ public class AuthExceptionHandler {
                 .body(new ResponseMessage(HttpStatus.CONFLICT, exception.getMessage()));
     }
 
-
+    @ExceptionHandler(VerificationFailedException.class)
+    public ResponseEntity<ResponseMessage> verificationFailed(VerificationFailedException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ResponseMessage(HttpStatus.BAD_REQUEST, exception.getMessage()));
+    }
 
 
 
