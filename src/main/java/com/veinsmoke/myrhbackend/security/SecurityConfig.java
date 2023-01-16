@@ -61,20 +61,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/agent/**").hasAnyAuthority("AGENT")
                 .anyRequest()
-                .authenticated()
-            .and()
-                .oauth2Login()
-                .authorizationEndpoint()
-                .authorizationRequestRepository(new InMemoryRequestRepository())
-            .and()
-                .successHandler(this::successHandler)
-            .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(this::authenticationEntryPoint);
-
+                .authenticated();
         http
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(tokenFilter, JWTAuthFilter.class)
                 .addFilterBefore(corsFilter, ChannelProcessingFilter.class);
 
         return http.build();

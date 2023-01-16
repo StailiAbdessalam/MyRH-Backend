@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@PropertySource("classpath:application.yaml")
+@PropertySource("classpath:application.properties")
 public class MailSenderService {
 
     private final JavaMailSender mailSender;
